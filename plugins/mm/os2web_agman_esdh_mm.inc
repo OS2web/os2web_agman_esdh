@@ -2,7 +2,7 @@
 
 /**
  * @file
- * This file describes the MM plugin as implemented by SBsys
+ * This file describes the MM plugin as implemented by Agenda Management
  */
 
 /**
@@ -34,7 +34,7 @@ function os2web_agman_esdh_mm_test($stuff) {
  */
 function os2web_agman_esdh_mm_get_import_list() {
   /*
-   * For the SBsys service, we need to import meetings from xml files.
+   * For the AGMAN service, we need to import meetings from xml files.
    * We will enumerate the list with the publication-id
    * as parsed from the dir name of the manifest.
    */
@@ -150,7 +150,7 @@ function os2web_agman_esdh_mm_import_meeting($meeting) {
       // Check if the committee is allowed to publish.
       $publish_committee = array_map('trim', explode(',', variable_get('os2web_agman_esdh_approved_committees', MM_DEFAULT_APPROVED)));
       if ($committee == '' || !in_array($committee, $publish_committee)) {
-        watchdog('SBsys MM', 'Ignored agenda from "%committee" .', array('%committee' => $committee));
+        watchdog('AGMAN MM', 'Ignored agenda from "%committee" .', array('%committee' => $committee));
         return FALSE;
       }
 
@@ -221,7 +221,7 @@ function os2web_agman_esdh_mm_import_meeting($meeting) {
       $meeting['pdf'] = (string) $meeting_pdf[0];
       $meeting['state'] = (string) $meeting_state[0];
       if (empty($meeting_agendas)) {
-        watchdog('SBsys MM', 'Empty list of import items in %file.', array('%file' => $file), WATCHDOG_WARNING);
+        watchdog('AGMAN MM', 'Empty list of import items in %file.', array('%file' => $file), WATCHDOG_WARNING);
       }
 
       foreach ($meeting_agendas as $meeting_agenda) {
@@ -233,7 +233,7 @@ function os2web_agman_esdh_mm_import_meeting($meeting) {
       }
     }
     else {
-      watchdog('SBsys MM', 'Failed to parse XML in %file during import.', array('%file' => $file), WATCHDOG_WARNING);
+      watchdog('AGMAN MM', 'Failed to parse XML in %file during import.', array('%file' => $file), WATCHDOG_WARNING);
     }
   }
   return $meetings;
@@ -269,7 +269,7 @@ function _os2web_agman_esdh_mm_import_meeting_agenda(&$meeting, $agenda_xml) {
     $agenda += os2web_esdh_provider_default_meeting();
     return $agenda;
   }
-  watchdog('SBsys MM', 'File do not exist in folder. %file', array('%file' => $xml_item_pdf), WATCHDOG_WARNING);
+  watchdog('AGMAN MM', 'File do not exist in folder. %file', array('%file' => $xml_item_pdf), WATCHDOG_WARNING);
   return FALSE;
 }
 
@@ -477,7 +477,7 @@ function _os2web_agman_esdh_mm_order_addenums($drush = FALSE) {
     }
     if (isset($meetings[$meeting_id[0]['value']][$meeting_sub_id[0]['value']])) {
       // Duplicate meeting detected.
-      watchdog('SBsys MM', 'Duplicate import found for meeting %mid. Deleting nid=%nid.', array('%mid' => $meeting_id['value'], '%nid' => $node->nid), WATCHDOG_WARNING);
+      watchdog('AGMAN MM', 'Duplicate import found for meeting %mid. Deleting nid=%nid.', array('%mid' => $meeting_id['value'], '%nid' => $node->nid), WATCHDOG_WARNING);
       node_delete($node->nid);
     }
     else {
