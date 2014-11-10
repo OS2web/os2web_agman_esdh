@@ -1,3 +1,9 @@
+Deprecated
+==========
+This repository is deprecated, and may be removed.
+
+Use <https://github.com/OS2WebCore/os2web_agman_esdh>
+
 OS2Web AGMAN ESDH Provider
 ==============================
 
